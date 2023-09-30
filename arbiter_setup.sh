@@ -1,3 +1,4 @@
+#!/bin/bash
 # Cache Kerberos ticket
 kinit admin
 # Add groupOfUniqueNames to support the uniqueMember attribute vCenter looks for.
