@@ -41,8 +41,8 @@ if not connection.bind():
 if args.fix:
     connection.search(base_dn, group_filter, attributes=['objectClass'])
     for entry in connection.entries:
-        if 'uniqueMember' not in entry.objectClass.values:
-            connection.modify(entry.entry_dn, [(ldap3.MODIFY_ADD, 'objectClass', 'groupOfUniqueNames')])
+        if 'groupsofuniquenames' not in entry.objectClass.values:
+            connection.modify(entry.entry_dn, {'objectClass': [(ldap3.MODIFY_ADD, 'groupOfUniqueNames')]})
         group_dn = entry.entry_dn
 
 
