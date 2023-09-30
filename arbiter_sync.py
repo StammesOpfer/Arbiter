@@ -10,6 +10,7 @@ config.read('arbiter_config.ini')
 # Parse cli args if present
 parser = argparse.ArgumentParser(description="FreeIPA Group Sync to support vCenter")
 parser.add_argument('-p', '--password', action='store_true', help="Interactive password entry")
+parser.add_argument('-f', '--fix', action='store_true', help="Add missing group attributes")
 args = parser.parse_args()
 
 # Assign config values to variables
@@ -19,7 +20,11 @@ base_dn = config.get('LDAP', 'groupdn')
 group_filter = config.get('LDAP', 'groupfilter')
 
 # Prompt the user for a password if -p is provided, otherwise read it from the config file
-if args.password:
+if args.fix:
+    print(f"To fix enter Administrator user in DN format similar to {ldaps_user}")
+    ldaps_user = input("Username DN: ")
+    ldaps_password = getpass.getpass("Enter your LDAP password: ")
+elif args.password:
     ldaps_password = getpass.getpass("Enter your LDAP password: ")
 else:
     ldaps_password = config.get('LDAP', 'password')
@@ -32,6 +37,14 @@ print()
 if not connection.bind():
     print("LDAP bind failed")
     exit()
+
+if args.fix:
+    connection.search(base_dn, group_filter, attributes=['objectClass'])
+    for entry in connection.entries:
+        if 'uniqueMember' not in entry.objectClass.values:
+            connection.modify(entry.entry_dn, [(ldap3.MODIFY_ADD, 'objectClass', 'groupOfUniqueNames')])
+        group_dn = entry.entry_dn
+
 
 # Search for groups that match the filter
 connection.search(base_dn, group_filter, attributes=['member', 'uniqueMember'])
