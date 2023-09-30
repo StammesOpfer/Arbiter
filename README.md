@@ -19,7 +19,7 @@ The filter option reduces the updates that must be accomplished by only running 
 ### Syncing users
 Ensure the ldap3 module is avaiable
 ```
-pip3 isntall ldap3
+pip3 install ldap3
 ```
 Run
 ```
