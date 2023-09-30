@@ -5,7 +5,7 @@ import getpass
 
 # Import config from ini
 config = configparser.ConfigParser()
-config.read('group_sync_config.ini')
+config.read('arbiter_config.ini')
 
 # Parse cli args if present
 parser = argparse.ArgumentParser(description="FreeIPA Group Sync to support vCenter")
