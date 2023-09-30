@@ -1,7 +1,7 @@
 # Arbiter
-## A way to make VMware vCenter and FreeIPA work together.
+## A way to make VMware vCenter and FreeIPA work together. <br> Schema updater and group member syncing.
 Built on vSphere 7 and FreeIPA 4.10 (Should support at minimum vCenter 6.5 - 8.0)
-
+Arbiter creates all the schema that vCenter expects (groupOfUniqueNames and uniqueMember) and permissions to view those new attributes. It also populates the attributes and syncs the FreeIPA "member" attribute to the "uniqueMember" attribute that vCenter reads and uses. What this means is that you FreeIPA groups now work in vCenter.
 
 ## Instructions
 
