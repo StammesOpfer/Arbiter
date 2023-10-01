@@ -21,9 +21,9 @@ group_filter = config.get('LDAP', 'groupfilter')
 
 # Prompt the user for a password if -p is provided, otherwise read it from the config file
 if args.fix:
-    print(f"To fix enter Administrator user in DN format similar to {ldaps_user}")
-    ldaps_user = input("Username DN: ")
-    ldaps_password = getpass.getpass("Enter your LDAP password: ")
+    ldaps_user = f'uid=admin,{ldaps_user.split(",", 1)[1]}'
+    print(f'User = {ldaps_user}')
+    ldaps_password = getpass.getpass("Enter the Admin LDAP password: ")
 elif args.password:
     ldaps_password = getpass.getpass("Enter your LDAP password: ")
 else:
