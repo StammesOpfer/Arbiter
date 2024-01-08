@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import ldap3
 import configparser
 import argparse
